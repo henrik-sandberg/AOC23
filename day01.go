@@ -7,8 +7,6 @@ import (
 	"strings"
 )
 
-var digits = []string{"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
-
 func Day01(input []string) {
 	fmt.Println("Result part 1:", day01_part1(input))
 	fmt.Println("Result part 2:", day01_part2(input))
@@ -25,21 +23,20 @@ func day01_part1(inp []string) (res int) {
 }
 
 func day01_part2(inp []string) (res int) {
+	digits := []string{"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
 	re := regexp.MustCompile("\\d|" + strings.Join(digits[1:], "|"))
+	tr := func(s string) string {
+		if i := IndexOf(digits, s); i != -1 {
+			return strconv.Itoa(i)
+		}
+		return s
+	}
 	for _, line := range inp {
 		for _, digit := range digits {
-			line = strings.ReplaceAll(line, digit, digit+string(digit[len(digit)-1]))
+			line = strings.ReplaceAll(line, digit, digit+digit[len(digit)-1:])
 		}
 		all := re.FindAllString(line, -1)
-		first := all[0]
-		if i := IndexOf(digits, first); i != -1 {
-			first = strconv.Itoa(i)
-		}
-		last := all[len(all)-1]
-		if i := IndexOf(digits, last); i != -1 {
-			last = strconv.Itoa(i)
-		}
-		n, _ := strconv.Atoi(first + last)
+		n, _ := strconv.Atoi(tr(all[0]) + tr(all[len(all)-1]))
 		res += n
 	}
 	return
