@@ -9,10 +9,10 @@ import (
 func Day02(input []string) {
 	part1 := 0
 	part2 := 0
-	for _, line := range input {
-		gameid, samples := parseGame(line)
+	for i, line := range input {
+		samples := parseGame(line)
 		if canUseLimitedNumberOfCubes(samples) {
-			part1 += gameid
+			part1 += i +1
 		}
 		part2 += minPossibleCubesProduct(samples)
 	}
@@ -43,10 +43,9 @@ func minPossibleCubesProduct(samples []map[string]int) int {
 	return res
 }
 
-func parseGame(raw string) (int, []map[string]int) {
+func parseGame(raw string) []map[string]int {
 	samples := []map[string]int{}
-	split := strings.SplitN(raw, ": ", 2)
-	for _, sample := range strings.Split(split[1], "; ") {
+	for _, sample := range strings.Split(strings.SplitN(raw, ": ", 2)[1], "; ") {
 		drawnCubes := map[string]int{}
 		for _, cubes := range strings.Split(sample, ", ") {
 			cube := strings.Split(cubes, " ")
@@ -55,7 +54,5 @@ func parseGame(raw string) (int, []map[string]int) {
 		}
 		samples = append(samples, drawnCubes)
 	}
-	game, _ := strings.CutPrefix(split[0], "Game ")
-	gameid, _ := strconv.Atoi(game)
-	return gameid, samples
+	return samples
 }

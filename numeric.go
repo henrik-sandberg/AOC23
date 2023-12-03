@@ -27,6 +27,13 @@ func max(n ...int) int {
 	return max
 }
 
+func sum(n ...int) (res int) {
+	for _, v := range n {
+		res += v
+	}
+	return res
+}
+
 func multiply(n ...int) int {
 	product := n[0]
 	for _, v := range n[1:] {
