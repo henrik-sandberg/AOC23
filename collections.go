@@ -14,3 +14,35 @@ func IndexOf[T comparable](s []T, e T) int {
 func Contains[T comparable](s []T, e T) bool {
 	return IndexOf(s, e) != -1
 }
+
+// Returns a new slice after applying the predicate function
+func Filter[T comparable](elems []T, predicate func(T) bool) []T {
+	ret := make([]T, 0, len(elems))
+	for _, e := range elems {
+		if predicate(e) {
+			ret = append(ret, e)
+		}
+	}
+	return ret
+}
+
+// Returns the intersect of first and second as a new slice
+func Intersect[T comparable](first, second []T) []T {
+	a := toMap(first)
+	b := toMap(second)
+	ret := make([]T, 0, min(len(a), len(b)))
+	for k, _ := range a {
+		if _, ok := b[k]; ok {
+			ret = append(ret, k)
+		}
+	}
+	return ret
+}
+
+func toMap[T comparable](slice []T) map[T]bool {
+	ret := make(map[T]bool, len(slice))
+	for _, v := range slice {
+		ret[v] = true
+	}
+	return ret
+}
