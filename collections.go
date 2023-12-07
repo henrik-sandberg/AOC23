@@ -15,6 +15,16 @@ func Contains[T comparable](s []T, e T) bool {
 	return IndexOf(s, e) != -1
 }
 
+// Returns the count of e in s
+func Count[T comparable](s []T, e T) (res int) {
+	for _, v := range s {
+		if v == e {
+			res++
+		}
+	}
+	return
+}
+
 // Returns a new slice after applying the predicate function
 func Filter[T comparable](elems []T, predicate func(T) bool) []T {
 	ret := make([]T, 0, len(elems))
@@ -45,4 +55,12 @@ func toMap[T comparable](slice []T) map[T]bool {
 		ret[v] = true
 	}
 	return ret
+}
+
+func bag(s string) map[rune]int {
+	vals := make(map[rune]int, len(s))
+        for _, c := range s {
+		vals[c]++
+	}
+	return vals
 }
