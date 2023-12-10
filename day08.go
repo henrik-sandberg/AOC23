@@ -45,11 +45,12 @@ func stepsUntilTarget(start, targetSuffix, dirs string, network map[string]tuple
 }
 
 func parseNetwork(raw []string) map[string]tuple {
-	m := make(map[string]tuple, len(raw))
+	network := make(map[string]tuple, len(raw))
 	for _, line := range raw {
 		split := strings.Split(line, " = ")
-		vals := strings.Split(split[1], ", ")
-		m[split[0]] = tuple{vals[0][1:], vals[1][:len(vals[1])-1]}
+		vals := split[1][1:len(split[1])-1]
+		lr := strings.Split(vals, ", ")
+		network[split[0]] = tuple{lr[0], lr[1]}
 	}
-	return m
+	return network
 }
