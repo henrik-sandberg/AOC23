@@ -41,3 +41,21 @@ func multiply(n ...int) int {
 	}
 	return product
 }
+
+func gcd(a, b int) int {
+	for b != 0 {
+              a, b = b, a % b
+	}
+	return a
+}
+
+func lcm(n ...int) int {
+	if len(n) < 2 {
+		panic("Can only calculate LCM of at least 2 numbers")
+	}
+	res := n[0] * (n[1] / gcd(n[0], n[1]))
+	for _, v := range n[2:] {
+              res = lcm(res, v)
+	}
+	return res
+}
