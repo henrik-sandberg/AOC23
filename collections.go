@@ -49,6 +49,12 @@ func Intersect[T comparable](first, second []T) []T {
 	return ret
 }
 
+func Remove[T any](slice []T, index int) []T {
+        ret := make([]T, 0, len(slice)-1)
+        ret = append(ret, slice[:index]...)
+        return append(ret, slice[index+1:]...)
+}
+
 func toMap[T comparable](slice []T) map[T]bool {
 	ret := make(map[T]bool, len(slice))
 	for _, v := range slice {
