@@ -1,5 +1,7 @@
 package main
 
+import "strconv"
+
 func abs(i int) int {
 	if i < 0 {
 		return -i
@@ -58,4 +60,12 @@ func lcm(n ...int) int {
               res = lcm(res, v)
 	}
 	return res
+}
+
+func toint(s string) int {
+	v, err := strconv.Atoi(s)
+	if err != nil {
+		panic(err)
+	}
+	return v
 }
